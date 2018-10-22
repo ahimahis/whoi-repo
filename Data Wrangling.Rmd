@@ -42,6 +42,64 @@ filter(gapminder, lifeExp < 29)
 filter(gapminder, country == "Mexico")
 filter(gapminder, country %in% c("Mexico", "Peru", "Brazil"))
 filter(gapminder, country == "Mexico", year == 2002)
+
+# find mean lifeExp of Sweden
+sweden <- filter(gapminder, country == "Sweden")
+mean(sweden$lifeExp)
+mean(sweden) # error: argument is not numeric or logical: returning NA[1] NA
 ```
+
+```{r}
+# select by columns
+select(gapminder, year, lifeExp)
+select(gapminder, -continent, -lifeExp) # - will exclude these columns
+
+# use select and filter together
+gap_cambodia <- filter(gapminder, country == "Cambodia")
+gap_cambodia2 <- select(gap_cambodia, -continent, -lifeExp)
+```
+
+# The pipe operator will change your life!
+
+```{r}
+# this:
+gapminder %>% head(3)
+# is equivalent to:
+head(gapminder, 3)
+
+# let's improve this with pipes!
+gap_cambodia <- filter(gapminder, country == "Cambodia")
+gap_cambodia2 <- select(gap_cambodia, -continent, -lifeExp)
+
+gap_cambodia <- gapminder %>% 
+  filter(country == "Cambodia") %>% 
+  select(-continent, -lifeExp)
+```
+# the above is creating different variables if you go into console and type gap_cambodia and hit return then you will get the data to show.
+
+```{r}
+# mutate adds new variables
+gapminder %>% 
+  mutate(index = 1:nrow(gapminder))
+
+gapminder %>% 
+  mutate(planet = "Earth")
+
+gapminder %>% 
+  mutate(gdp = pop * gdpPercap)
+
+#Challenge:
+#Find the maximum gdpPerCap of Egypt and Vietnam. Create a new column. Only one max between the two countries.
+
+gapminder %>%
+  filter(country %in% c("Egypt", "Vietnam")) %>% 
+  mutate(gdp = pop * gdpPercap) %>% 
+  mutate(max_gdp = max(gdp))
+
+
+
+```
+
+
 
 
