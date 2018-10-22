@@ -33,6 +33,15 @@ nrow(gapminder) # number of rows
 # reverse-engineer data
 c(nrow(gapminder), ncol(gapminder))
 
-
 ```
+
+# start of dplyr!
+```{r}
+# filter by rows
+filter(gapminder, lifeExp < 29)
+filter(gapminder, country == "Mexico")
+filter(gapminder, country %in% c("Mexico", "Peru", "Brazil"))
+filter(gapminder, country == "Mexico", year == 2002)
+```
+
 
