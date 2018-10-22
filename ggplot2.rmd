@@ -81,4 +81,66 @@ theme(legend.title = element_blank(), #this removed the legend title
     axis.text.x = element_text(angle = 45, hjust = 1, size = 14)) #this angles the x axis years and increases their size.
 ```
 
+# Faceting Plots
+
+```{r}
+ggplot(data = se) +
+  geom_point(aes(x = year, y = visitors, color = park_name)) +
+  facet_wrap(~ state, scales = "free") +
+theme(axis.text.x = element_text(angle = 90))
+```
+
+# geoms
+
+```{r}
+ggplot(data = se) +
+  geom_jitter(aes(x = park_name, y = visitors), alpha = 0.4, width = 0.1, color = "blue") +
+  coord_flip() #if color was inside aes then it would be looking for a color, coor outside assigns data a color
+```
+#
+
+```{r}
+ggplot(se) +
+  geom_line(aes(x = year, y = visitors, color = park_name)) +
+  theme_bw()
+```
+
+# Multiple geoms on one plot
+
+```{r}
+ggplot(data = acadia) +
+  geom_point(aes(x = year, y = visitors)) +
+  geom_line(aes(x = year, y = visitors)) +
+  geom_smooth(aes(x = year, y = visitors))
+```
+
+```{r}
+#install.packages("ggthemes")
+library(ggthemes)
+ggplot(data = acadia, aes(x = year, y = visitors)) +
+  geom_point() +
+  geom_line() +
+  geom_smooth() +
+  theme_economist()
+# this plot is the same as the above except the asthetics are captured with the data instead of repeating them line by line.
+```
+
+# Bar Charts
+
+```{r}
+ggplot(data = visit_16, aes(x = state, y = visitors, fill = park_name)) +
+  geom_bar(stat = "identity", position = "dodge")
+```
+
+# Save a ggplot
+
+```{r}
+myplot <- ggplot(data = visit_16, aes(x = state, y = visitors, fill = park_name)) +
+  geom_bar(stat = "identity", position = "dodge")
+
+myplot
+
+ggsave(filename = "myplot.png", myplot, dpi = 300)
+```
+
 
